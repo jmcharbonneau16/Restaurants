@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Restaurants</title>
+  <script src="restaurants.js">
+  </script>
+  <script src="resto_script.js"></script>
+</head>
+
+<body>
+  <h1>Liste des restaurants</h1>
+
+
+<input type="text" name="searchbox" id = "srchbox"> <select id ="dropmenu">
+        <option value="1">Name </option>
+        <option value="2">City</option>
+        <option value="3">Proximity </option>
+        <option value="4">Type </option>
+    </select>
+ <button type="button" onclick="searchF()">Search</button>
+<br>
+ <img src = "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png" alt = "icon" style = "width: 50px; height 50px">
+<p id="demo"></p>
+<div id="result"></div>
+
+<script>var x = resto[0].formatted_address;
+var y = resto[0].name;
+var t = resto[0].formatted_phone_number
+var z = resto[0].icon;
+
+document.getElementById("demo").innerHTML = y + "<br>" + x + "<br>" + t;
+</script>
+
+
+</body>
+</html>
