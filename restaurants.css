@@ -1,0 +1,76 @@
+body{
+	background-color: rgb(192,192,192);
+}
+
+h1{
+	color: rgb (255, 255, 255);
+	text-align: center;
+	font: 30px Verdana;
+	font-weight: bold;
+	
+}
+
+span{
+	
+	
+}
+
+.criteres{
+	display: inline-block;
+	background-color: black;
+    color: white;
+    margin: 20px 0 20px 0;
+    padding: 50%, 50%, 50%, 50%;
+	
+}
+
+h2{
+	font: 25px Verdana;
+}
+
+.result{
+	
+
+
+}
+
+.cases{
+	display: inline-block;
+	background-color: #7d2585;
+	width: 200px;
+	height: 140px;
+	border: 1px solid black;
+	padding-left:10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+    margin: 5px;
+	 vertical-align: top;
+	 cursor: pointer;
+	 border-radius: 25px;
+	 font-family: Arial;
+}
+
+.infoTitre{
+	font-family: Arial;
+	font-weight: bold;
+	color: #dde81a;
+}
+
+.info{
+	color: #dde81a;
+}
+
+.search{
+	border: 1px solid #ccc;
+    border-radius: 25px;
+    box-shadow: 2px 2px 3px #666;
+    font-size: 20px;
+    padding: 4px 7px;
+    outline: 0;
+	display: inline-block;
+    width: 200px;
+    text-align: center;
+}
+}
+
