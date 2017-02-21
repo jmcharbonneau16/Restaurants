@@ -20,7 +20,18 @@ if (strUser == 1){
     res.push(resto[i]);
   }
   }
+}else if(strUser == 3){
+    for (var i = 0; i < resto.length; i+=1){
+      for(var j = 0; j < resto[i].types.length; j+=1){
+        var local = resto[i].types[j];
+        var lcLocal = local.toLowerCase();
+        if (local.search(term) >= 0){
+        res.push(resto[i]);
+      }
+    }
+  }
 }
+
 
 term = null;
 o = null;
@@ -45,13 +56,21 @@ for (var i = 0; i < res.length; i+=1){
 
   var rAddress = document.createElement("span")
   rAddress.id = "address";
-  rAddress.innerHTML = res[i].formatted_address + "<br>";
+  if(res[i].formatted_address === undefined){
+    rAddress.innerHTML = "No adress found" + "<br>"
+  }else{
+    rAddress.innerHTML = res[i].formatted_address + "<br>";
+  }
   para.appendChild(rAddress);
   rAddress = null;
 
   var rPhone = document.createElement("span")
   rPhone.id = "phone";
-  rPhone.innerHTML = res[i].formatted_phone_number + "<br>" + "<br>";
+  if(res[i].formatted_phone_number === undefined){
+    rPhone.innerHTML = "No phone number found" + "<br>";
+  }else{
+    rPhone.innerHTML = res[i].formatted_phone_number + "<br>" + "<br>";
+  }
   para.appendChild(rPhone);
   rPhone = null;
 
@@ -85,19 +104,36 @@ for (var i = 0; i < res.length; i+=1){
 
         var revName = document.createElement("span");
         revName.id = "Auteur"
-        revName.innerHTML = res[i].reviews[k].author_name + "<br>";
+        if(res[i].reviews[k].author_name === undefined){
+          revName.innerHTML = "Anonymous" + "<br>";}
+        else{
+          revName.innerHTML = res[i].reviews[k].author_name + "<br>";
+        }
 
         var revRating = document.createElement("span");
         revRating.id = "Score";
-        revRating.innerHTML = res[i].reviews[k].rating + " out of 5" + "<br>";
+        if(res[i].reviews[k].rating === undefined){
+          revRating.innerHTML = "No rating" + "<br>";
+        }else{
+          revRating.innerHTML = res[i].reviews[k].rating + " out of 5" + "<br>";
+        }
 
         var revTime = document.createElement("span");
         revTime.id = "Temps";
-        revTime.innerHTML = res[i].reviews[k].relative_time_description + "<br>";
+        if(res[i].reviews[k].relative_time_description === undefined){
+          revTime.innerHTML = "";
+        }else{
+          revTime.innerHTML = res[i].reviews[k].relative_time_description + "<br>";
+        }
 
         var revText = document.createElement("span");
         revText.id = "Texte";
-        revText.innerHTML = res[i].reviews[k].text + "<br>";
+        if(res[i].reviews[k].text === undefined){
+          revText.innerHTML ="";
+        }else{
+          revText.innerHTML = res[i].reviews[k].text + "<br>";
+        }
+
 
         rev.appendChild(revName);
         rev.appendChild(revRating);
@@ -108,9 +144,6 @@ for (var i = 0; i < res.length; i+=1){
       }
   }
   para.appendChild(rReviews);
-  k = null;
-  rev = null;
-  rReviews = null;
 
 var rNewRev = document.createElement("p");
 rNewRev.id = "RevInput";
@@ -128,10 +161,10 @@ radBut.action = "";
   radOne.id = "1star";
   radOne.name = "Score";
   radOne.type = "radio";
-  radOne.value = "1"
+  radOne.value = "1";
   radBut.appendChild(radOne);
 
-  var labelOne = document.createElement("span");
+  var labelOne = document.createElement("label");
   labelOne.id = "label";
   labelOne.innerHTML = "1"
   radBut.appendChild(labelOne)
@@ -184,34 +217,71 @@ radBut.action = "";
   labelFive.innerHTML = "5"
   radBut.appendChild(labelFive)
 
-  var noScore = document.createElement("input");
-  noScore.id = "nostar";
-  noScore.name = "Score";
-  noScore.type = "radio";
-  noScore.value = "No Score"
-  radBut.appendChild(noScore);
-
-  var labelNo = document.createElement("span");
-  labelNo.id = "label";
-  labelNo.innerHTML = "No Score"
-  radBut.appendChild(labelNo)
-
   rNewRev.appendChild(radBut);
+
+  var nBox = document.createElement("input");
+  nBox.id = "nInput"
+  nBox.name = "nInput"
+  nBox.type = "text"
+  nBox.placeholder = "Your name";
+  rNewRev.appendChild(nBox);
 
   var tBox = document.createElement("input");
   tBox.id = "rInput"
   tBox.name = "Input"
   tBox.type = "text"
+  tBox.placeholder = "Write a review";
   rNewRev.appendChild(tBox);
 
   var rSBut = document.createElement("button");
   rSBut.type = "button";
   rSBut.innerHTML = "Publish Review"
-  rSBut.addEventListener("click" function addReview(){
-    if (res[i].reviews === undefined){
-      rReviews.innerHTML = "";
-      var myReview = document.getElementById('rInput').value;
-      myv
+  rSBut.addEventListener("click", function addReview(){
+    if (this.parentNode.previousSibling.innerHTML === "No reviews found"){
+      this.parentNode.previousSibling.innerHTML = "";
+        }
+        var nRev = document.createElement("p");
+        nRev.id = "review";
+
+        var nRevName = document.createElement("span");
+        nRevName.id = "Auteur"
+        var nTBox = this.previousSibling.previousSibling.value;
+        if (nTBox === ""){
+          nRevName.innerHTML = "Anonymous" + "<br>";
+        }else{
+          nRevName.innerHTML = nTBox + "<br>";
+        }
+
+
+        var nRevRating = document.createElement("span");
+        nRevRating.id = "Score";
+        var bCheck = false;
+        var radStandin = this.parentNode.firstChild.nextSibling;
+        for(var a = 0; a < radStandin.length; a++){
+          if (radStandin[a].checked){
+            var actScore = radStandin[a].value;
+            bCheck = true;
+        }
+      }
+        if(bCheck){
+          nRevRating.innerHTML = actScore + " out of 5" + "<br>";
+        }else{
+          nRevRating.innerHTML = "No score given" + "<br>";
+        }
+
+        var nRevTime = document.createElement("span");
+        nRevTime.id = "Today";
+        nRevTime.innerHTML = "Today"+ "<br>";
+
+        var nRevText = document.createElement("span");
+        nRevText.id = "Texte";
+        nRevText.innerHTML = this.previousSibling.value + "<br>";
+
+        nRev.appendChild(nRevName);
+        nRev.appendChild(nRevRating);
+        nRev.appendChild(nRevTime);
+        nRev.appendChild(nRevText);
+        this.parentNode.previousSibling.appendChild(nRev)
 
   })
   rNewRev.appendChild(rSBut);
